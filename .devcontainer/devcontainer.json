@@ -4,9 +4,6 @@
   "features": {
     "ghcr.io/devcontainers/features/git:1": {}
   },
-  "secrets": {
-    "RCLONE_CONF": {}
-  },
   "customizations": {
     "vscode": {
       "extensions": [
@@ -16,6 +13,6 @@
       ]
     }
   },
-  "postCreateCommand": "cd /tmp && curl -O https://downloads.rclone.org/rclone-current-linux-amd64.zip && unzip rclone-current-linux-amd64.zip && mkdir -p ~/.local/bin && cp rclone-*/rclone ~/.local/bin/ && chmod +x ~/.local/bin/rclone && mkdir -p ~/.config/rclone && echo \"$RCLONE_CONF\" > ~/.config/rclone/rclone.conf && mkdir -p ~/projects && echo \"alias gsave='~/.local/bin/rclone sync ~/projects filesystem:devbox-projects'\" >> ~/.bashrc",
+  "postCreateCommand": "cd /tmp && curl -O https://downloads.rclone.org/rclone-current-linux-amd64.zip && unzip rclone-current-linux-amd64.zip && mkdir -p ~/.local/bin && cp rclone-*/rclone ~/.local/bin/ && chmod +x ~/.local/bin/rclone && mkdir -p ~/.config/rclone && [ -f /workspaces/devbox/.devcontainer/rclone.conf ] && cp /workspaces/devbox/.devcontainer/rclone.conf ~/.config/rclone/rclone.conf || true && mkdir -p ~/projects && echo \"alias gsave='~/.local/bin/rclone sync ~/projects filesystem:devbox-projects'\" >> ~/.bashrc",
   "postStartCommand": "~/.local/bin/rclone sync filesystem:devbox-projects ~/projects"
 }
